@@ -1,3 +1,16 @@
+.column {
+  float: left;
+  width: 50%;
+  /* height: 100%; */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .App {
   text-align: center;
 }
@@ -31,4 +44,3 @@
     transform: rotate(360deg);
   }
 }
-
