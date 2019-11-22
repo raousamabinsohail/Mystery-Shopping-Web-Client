@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBModalFooter,
-  MDBIcon,
-  MDBCardHeader,
-  MDBBtn,
-  MDBInput
-} from "mdbreact";
+
 // var cors = require('cors');
 // var express = require('express')
 // var router = express.Router()
@@ -66,12 +55,12 @@ class Login extends React.Component {
   emailHandler = e => {
     this.setState({ email: e.target.value });
   };
-  onSubmitForm(e) {
+  onSubmitForm = e => {
     e.preventDefault();
-    console.log(this.state.email);
+    console.log("email =>", this.state.email);
     console.log(this.state.password);
     this.handleCredentialPostRequest();
-  }
+  };
   render() {
     var bachiImage = "images/bachi2.jpg";
     return (
@@ -105,7 +94,10 @@ class Login extends React.Component {
                   className="wrap-login100 p-t-190 p-b-30"
                   style={{ maxHeight: "100%" }}
                 >
-                  <form className="login100-form validate-form">
+                  <form
+                    className="login100-form validate-form"
+                    onSubmit={this.onSubmitForm}
+                  >
                     <h1
                       style={{
                         marginLeft: "12.5%",
@@ -138,6 +130,7 @@ class Login extends React.Component {
                         type="text"
                         name="username"
                         placeholder="Username"
+                        onChange={this.emailHandler}
                       />
                       <span className="focus-input100"></span>
                       <span className="symbol-input100">
@@ -154,6 +147,7 @@ class Login extends React.Component {
                         type="password"
                         name="pass"
                         placeholder="Password"
+                        onChange={this.passwordHandler}
                       />
                       <span className="focus-input100"></span>
                       <span className="symbol-input100">
