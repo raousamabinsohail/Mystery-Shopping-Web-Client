@@ -1,3 +1,142 @@
+.fl {
+  border: 1px solid black;
+}
+/* combo box */
+
+.box {
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box select {
+  background-color: #042744;
+  color: white;
+  padding: 12px;
+  width: 250px;
+  border: 2px;
+  border-radius: 15px;
+  font-size: 14px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  /* -webkit-appearance: button; */
+  /* appearance: button; */
+  outline: none;
+}
+
+.box::before {
+  /* content: "\f13a"; */
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: linear-gradient(
+    to right,
+    #0c2646 0%,
+    #204065 60%,
+    #2a5788 100%
+  );
+  pointer-events: none;
+}
+
+.box:hover::before {
+  border-radius: 15px;
+
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  /* border-radius: 15px; */
+  padding: 30px;
+}
+/* combo box end */
+
+.customBtn {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.customBtn {
+  font-family: Montserrat-Bold;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #e0e0e0;
+
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  background: #333333;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+
+  position: relative;
+  z-index: 1;
+}
+
+.customBtn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, #0c2646 0%, #204065 60%, #2a5788 100%);
+  background: -webkit-linear-gradient(left, #a30803, #fa9775);
+  background: -o-linear-gradient(left, #a30803, #fa9775);
+  background: -moz-linear-gradient(left, #a30803, #fa9775);
+  /* background: linear-gradient(left, #005bea, #00c6fb);
+  */
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  opacity: 0;
+}
+
+.customBtn:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.customBtn:hover:before {
+  opacity: 1;
+}
+
+.card_counter {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background: linear-gradient(to right, #0c2646 0%, #204065 60%, #2a5788 100%);
+  color: white;
+}
+
 .column {
   float: left;
   width: 50%;

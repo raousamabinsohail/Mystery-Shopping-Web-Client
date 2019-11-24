@@ -59,7 +59,8 @@ class Login extends React.Component {
     e.preventDefault();
     console.log("email =>", this.state.email);
     console.log(this.state.password);
-    this.handleCredentialPostRequest();
+    this.props.history.push("/dashboard");
+    // this.handleCredentialPostRequest();
   };
   render() {
     var bachiImage = "images/bachi2.jpg";
@@ -180,8 +181,9 @@ class Login extends React.Component {
             <div>
               <h1
                 style={{
+                  paddingRight: "20%",
                   paddingTop: "30%",
-                  paddingLeft: "8%",
+                  // paddingLeft: ,
                   fontFamily: "Charcoal",
                   fontSize: "35px",
                   fontWeight: "bold"

@@ -1,8 +1,45 @@
 import React from "react";
-import Sidemenu from "./sidemenu";
-import Navbar from "./navbar";
-class Userprofile extends React.Component {
-  state = {};
+class AddFranchise extends React.Component {
+  state = {
+    orgName: "",
+    email: "",
+    franchiseName: "",
+    contact: "",
+    address: [],
+    province: "",
+    city: "",
+    country: "",
+    franciseId: ""
+  };
+  formHandler = e => {
+    console.log(e.target.name);
+    if (e.target.name === "organizationName") {
+      this.setState({ orgName: e.target.value });
+    }
+
+    if (e.target.name === "email") {
+      this.setState({ email: e.target.value });
+    }
+    if (e.target.name === "franchiseName") {
+      this.setState({ franchiseName: e.target.value });
+    }
+    if (e.target.name === "contact") {
+      this.setState({ contact: e.target.value });
+    }
+    if (e.target.name === "address") {
+      this.setState({ address: e.target.value });
+    }
+    if (e.target.name === "province") {
+      this.setState({ province: e.target.value });
+    }
+    if (e.target.name === "city") {
+      this.setState({ city: e.target.value });
+    }
+    if (e.target.name === "country") {
+      this.setState({ country: e.target.value });
+    }
+  };
+  addBranchInList() {}
   render() {
     return (
       <React.Fragment>
@@ -12,23 +49,24 @@ class Userprofile extends React.Component {
             <div className="col-md-8">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="title">Edit Profile</h5>
+                  <h5 className="title">Add Franchise</h5>
                 </div>
                 <div className="card-body">
                   <form>
                     <div className="row">
                       <div className="col-md-5 pr-1">
                         <div className="form-group">
-                          <label>Company (disabled)</label>
+                          <label>Organization's Name</label>
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Company"
-                            defaultValue="Creative Code Inc."
+                            name="organizationName"
+                            placeholder="Organization Name"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
-                      <div className="col-md-3 px-1">
+                      {/* <div className="col-md-3 px-1">
                         <div className="form-group">
                           <label>Username</label>
                           <input
@@ -38,14 +76,16 @@ class Userprofile extends React.Component {
                             defaultValue="michael23"
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-md-4 pl-1">
                         <div className="form-group">
                           <label id="exampleInputEmail1">Email address</label>
                           <input
                             type="email"
                             className="form-control"
+                            name="email"
                             placeholder="Email"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
@@ -53,23 +93,25 @@ class Userprofile extends React.Component {
                     <div className="row">
                       <div className="col-md-6 pr-1">
                         <div className="form-group">
-                          <label>First Name</label>
+                          <label>Francise Name</label>
                           <input
                             type="text"
+                            name="franchiseName"
                             className="form-control"
                             placeholder="Company"
-                            defaultValue="Mike"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
                       <div className="col-md-6 pl-1">
                         <div className="form-group">
-                          <label>Last Name</label>
+                          <label>Contact#</label>
                           <input
                             type="text"
+                            name="contact"
                             className="form-control"
-                            placeholder="Last Name"
-                            defaultValue="Andrew"
+                            placeholder="Contact"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
@@ -80,9 +122,10 @@ class Userprofile extends React.Component {
                           <label>Address</label>
                           <input
                             type="text"
+                            name="address"
                             className="form-control"
-                            placeholder="Home Address"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            placeholder="Franchise Address"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
@@ -90,33 +133,37 @@ class Userprofile extends React.Component {
                     <div className="row">
                       <div className="col-md-4 pr-1">
                         <div className="form-group">
-                          <label>City</label>
+                          <label>Province</label>
                           <input
                             type="text"
+                            name="province"
                             className="form-control"
-                            placeholder="City"
-                            defaultValue="Mike"
+                            placeholder="province"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
                       <div className="col-md-4 px-1">
                         <div className="form-group">
-                          <label>Country</label>
+                          <label>City</label>
                           <input
                             type="text"
+                            name="city"
                             className="form-control"
-                            placeholder="Country"
-                            defaultValue="Andrew"
+                            placeholder="City"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
                       <div className="col-md-4 pl-1">
                         <div className="form-group">
-                          <label>Postal Code</label>
+                          <label>Country</label>
                           <input
                             type="number"
+                            name="country"
                             className="form-control"
-                            placeholder="ZIP Code"
+                            placeholder="Country"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
@@ -124,15 +171,9 @@ class Userprofile extends React.Component {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="form-group">
-                          <label>About Me</label>
-                          <textarea
-                            rows="4"
-                            cols="80"
-                            className="form-control"
-                            placeholder="Here can be your description"
-                            defaultValue="  Lamborghini Mercy, Your chick she so thirsty,
-                                  I'm in that two seat Lambo."
-                          ></textarea>
+                          <button className="customBtn" type="submit">
+                            Add Franchise
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -142,48 +183,27 @@ class Userprofile extends React.Component {
             </div>
             <div className="col-md-4">
               <div className="card card-user">
-                <div className="image">
-                  <img src="../assets/img/bg5.jpg" alt="..." />
-                </div>
                 <div className="card-body">
-                  <div className="author">
-                    <a href="#">
-                      <img
-                        className="avatar border-gray"
-                        src="../assets/img/mike.jpg"
-                        alt="..."
-                      />
-                      <h5 className="title">Mike Andrew</h5>
-                    </a>
-                    <p className="description">michael24</p>
+                  <p className="description text-center"></p>
+
+                  <div className="column_counter">
+                    <div className="card_counter">
+                      <p>
+                        <i
+                          className="fa fa-building"
+                          style={{ fontSize: "45px", color: "white" }}
+                        ></i>
+                      </p>
+                      <br />
+                      <h3>11+</h3>
+                      <br />
+                      No of Franchises
+                      <br />
+                      <br />
+                    </div>
                   </div>
-                  <p className="description text-center">
-                    "Lamborghini Mercy
-                    <br /> Your chick she so thirsty
-                    <br /> I'm in that two seat Lambo"
-                  </p>
                 </div>
                 <hr />
-                <div className="button-container">
-                  <button
-                    href="#"
-                    className="btn btn-neutral btn-icon btn-round btn-lg"
-                  >
-                    <i className="fab fa-facebook-f"></i>
-                  </button>
-                  <button
-                    href="#"
-                    className="btn btn-neutral btn-icon btn-round btn-lg"
-                  >
-                    <i className="fab fa-twitter"></i>
-                  </button>
-                  <button
-                    href="#"
-                    className="btn btn-neutral btn-icon btn-round btn-lg"
-                  >
-                    <i className="fab fa-google-plus-g"></i>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -193,7 +213,7 @@ class Userprofile extends React.Component {
             <nav>
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com">Creative Tim</a>
+                  <a href="https://www.creative-tim.com">Mystery Shop</a>
                 </li>
                 <li>
                   <a href="http://presentation.creative-tim.com">About Us</a>
@@ -203,22 +223,6 @@ class Userprofile extends React.Component {
                 </li>
               </ul>
             </nav>
-            <div className="copyright" id="copyright">
-              &copy;
-              <script>
-                document.getElementById('copyright').appendChild(document.createTextNode(new
-                Date().getFullYear()))
-              </script>
-              , Designed by
-              <a href="https://www.invisionapp.com" target="_blank">
-                Invision
-              </a>
-              . Coded by
-              <a href="https://www.creative-tim.com" target="_blank">
-                Creative Tim
-              </a>
-              .
-            </div>
           </div>
         </footer>
       </React.Fragment>
@@ -226,4 +230,4 @@ class Userprofile extends React.Component {
   }
 }
 
-export default Userprofile;
+export default AddFranchise;
