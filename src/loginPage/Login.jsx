@@ -11,7 +11,7 @@ class Login extends React.Component {
   };
 
   handleCredentialPostRequest() {
-    fetch("https://discountz-hub.herokuapp.com/auth/login", {
+    fetch("https://192.168.1.105/login", {
       // mode: "no-cors",
       method: "POST",
       credentials: "include",
