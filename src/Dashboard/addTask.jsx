@@ -32,44 +32,33 @@ class AddTask extends React.Component {
       questionsList1.push(this.state.questionsList[i]);
     }
 
-    this.state.qCounter.pop();
-    this.state.questionsList = [];
-    this.state.optionInput = [];
-    this.state.optionList = [];
-
-    // console.log("after reset  ", this.state.questionsList);
-    this.state.questionsList = questionsList1;
-    this.state.optionInput = optionInput1;
-    this.state.optionList = optionList1;
+    // this.state.qCounter.pop();
+    // this.state.questionsList = [];
+    // this.state.optionInput = [];
+    // this.state.optionList = [];
 
     console.log(this.state.optionInput);
     console.log(this.state.optionList);
     console.log(this.state.questionsList);
-    this.setState({
-      optionList: optionList1,
-      optionInput: optionInput1,
-      optionInputCounter: this.state.optionInput.length
-    });
 
-    // console.log(this.state.questionsList.splice(1, 1));
+    // for (let i = 0; i < this.state.optionList.length; i++) {
+    //   this.state.optionList[i]["id"] = i;
+    // }
+    // for (let i = 0; i < this.state.optionInput.length; i++) {
+    //   this.state.optionInput[i]["id"] = i;
+    // }
 
-    for (let i = 0; i < this.state.optionList.length; i++) {
-      this.state.optionList[i]["id"] = i;
-    }
-    for (let i = 0; i < this.state.optionInput.length; i++) {
-      this.state.optionInput[i]["id"] = i;
-    }
-
-    for (let i = 0; i < this.state.questionsList.length; i++) {
-      this.state.questionsList[i]["id"] = i;
-    }
+    // for (let i = 0; i < this.state.questionsList.length; i++) {
+    //   this.state.questionsList[i]["id"] = i;
+    // }
   };
 
   removeOptionHandler = e => {
     let rowIndex = e.target.id;
     let itemIndex = this.state.selectedItem[rowIndex]["item"];
     let optionList = this.state.optionList;
-
+    console.log(rowIndex, "   remove options array= ", optionList);
+    console.log("remove options here= ", optionList[rowIndex]);
     if (optionList[rowIndex]["value"].length > 0) {
       optionList[rowIndex]["value"].splice(itemIndex, 1);
       this.setState({ optionList, optionList });
@@ -173,6 +162,10 @@ class AddTask extends React.Component {
         id: String(this.state.optionInputCounter),
         value: ""
       })
+    });
+    this.state.optionList.push({
+      id: String(this.state.optionInputCounter),
+      value: []
     });
     this.state.questionsList.push({
       id: String(this.state.optionInputCounter),
