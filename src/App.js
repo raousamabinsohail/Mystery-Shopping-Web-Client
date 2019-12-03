@@ -20,8 +20,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/login" component={Login} />
+
+            {/* <Route exact path="/" component={Login} /> */}
             {/* <Route
               path="/logout"
               render={() => { 
@@ -29,7 +30,8 @@ class App extends Component {
                 return <Redirect to="/" />;
               }}
             /> */}
-            <PrivateRoute path="/dashboard" component={DashboardPage} />
+
+            <PrivateRoute exact path="/dashboard" component={DashboardPage} />
             <PrivateRoute path="/profile" component={UserProfilePage} />
             <PrivateRoute path="/addtask" component={AddTaskPage} />
             <PrivateRoute path="/addFranchise" component={AddFranchisePage} />

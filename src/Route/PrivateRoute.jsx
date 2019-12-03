@@ -6,20 +6,37 @@ import {
   Redirect,
   BrowserRouter as Router
 } from "react-router-dom";
-// import Auth from "./Auth";
+import Auth from "../auth";
 
 class PrivateRoute extends React.Component {
   state = {
     loaded: false,
     isAuthenticated: true
   };
-  //   componentDidMount() {
-  //     Auth.authenticate((misAuthenticated, misLoaded) => {
-  //       console.log("sa" + misAuthenticated + "  a" + misLoaded);
-  //       this.setState({ loaded: misLoaded, isAuthenticated: misAuthenticated });
-  //     });
-  //   }
+  // authenticate(cb) {
+  //   let isAuthenticated = Auth.isAuthenticated;
+  //   setTimeout(cb, 100); // fake async
+  // }
+  componentDidMount() {
+    // let auth = Auth.isAuthenticated;
+    // console.log("pr ", auth);
+    // this.setState({ isAuthenticated: auth });
+  }
   render() {
+    // const fakeAuth = {
+    //   isAuthenticated: false,
+
+    //   authenticate(cb) {
+    //     fakeAuth.isAuthenticated = Auth.isAuthenticated;
+    //     console.log(fakeAuth.isAuthenticated);
+    //     setTimeout(cb, 100); // fake async
+    //   },
+    //   signout(cb) {
+    //     fakeAuth.isAuthenticated = false;
+    //     setTimeout(cb, 100);
+    //   }
+    // };
+    console.log(this.authenticate);
     const { component: Component, ...rest } = this.props;
     // const { loaded, isAuthenticated } = this.state;
     // if (!loaded) return null;
@@ -27,7 +44,7 @@ class PrivateRoute extends React.Component {
       <Route
         {...rest}
         render={props => {
-          return this.state.isAuthenticated ? (
+          return Auth.isAuthenticated ? (
             <Component {...props} />
           ) : (
             <Redirect

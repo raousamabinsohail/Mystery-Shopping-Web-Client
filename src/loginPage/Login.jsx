@@ -1,5 +1,7 @@
 import React from "react";
-
+import Auth from "../auth";
+import { Link, withRouter, Redirect } from "react-router-dom";
+import { browserHistory } from "react-router";
 // var cors = require('cors');
 // var express = require('express')
 // var router = express.Router()
@@ -9,44 +11,45 @@ class Login extends React.Component {
     email: "",
     password: ""
   };
-
+ 
+  // https://mysteryshopper1.azurewebsites.net/api/r/getallbranches
   handleCredentialPostRequest() {
-    fetch("https://192.168.1.105/login", {
-      // mode: "no-cors",
+    fetch("https://mysteryshopper1.azurewebsites.net/api/r/login", {
       method: "POST",
-      credentials: "include",
+      credentials: "same-origin",
       headers: {
-        accept: "application/json",
-        "content-type": "application/json"
-        // "Access-Control-Allow-Origin":"*",
+        // accept: "application/json",
+        Accept: "application/json",
+        "Content-Type": "application/json"
+        // "Access-Control-Allow-Origin": "https://javascript.info"
       },
       body: JSON.stringify({
-        // name: "asdsa",
-        email: "asjkdhsa@gmail.com",
-        password: "password"
+        email: this.state.email,
+        password: this.state.password
       })
     })
       .then(function(res) {
+        // console.log(res);
         return res.json();
       })
       .then(response => {
-        console.log("asdasdasdgyu yes asfdashdh");
+        console.log("response of server:");
         console.log(response);
-        if (response.authenticate === "true") {
-          // this.props.history.push('/dashboard');
-          console.log("authenticate");
-          ///LOAD HOME PAGE
-        } else if (response.authenticate === "false") {
-          console.log(response.message);
-          // this.setState({ emailError: true, passwordError: true });
+        if (response === "No restaurant found!") {
+          // console.log(" not authenticate");
+          alert("Invalid password or email");
+          Auth.isAuthenticated = false;
         } else {
-          console.log("Serious Error");
+          console.log("server authentication");
+          Auth.isAuthenticated = true;
+          // Auth.isLoaded = true;
+          Auth.response = response;
+          this.props.history.push("/dashboard");
         }
       })
       .catch(function(res) {
         console.log(res);
       });
-    console.log("request sent");
   }
 
   passwordHandler = e => {
@@ -60,7 +63,7 @@ class Login extends React.Component {
     console.log("email =>", this.state.email);
     console.log(this.state.password);
     this.props.history.push("/dashboard");
-    // this.handleCredentialPostRequest();
+    this.handleCredentialPostRequest();
   };
   render() {
     var bachiImage = "images/bachi2.jpg";

@@ -53,14 +53,14 @@ class Navbar extends Component {
                 </div>
               </form>
               <ul className="navbar-nav">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#pablo">
                     <i className="now-ui-icons media-2_sound-wave"></i>
                     <p>
                       <span className="d-lg-none d-md-block">Stats</span>
                     </p>
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   {/* <a
                           className="nav-link dropdown-toggle"
@@ -92,14 +92,14 @@ class Navbar extends Component {
                           </a>
                         </div> */}
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#pablo">
                     <i className="now-ui-icons users_single-02"></i>
                     <p>
                       <span className="d-lg-none d-md-block">Account</span>
                     </p>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

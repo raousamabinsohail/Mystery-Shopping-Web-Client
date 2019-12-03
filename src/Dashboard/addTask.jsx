@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ComboBox from "../Dashboard/combobox";
+import Auth from "../auth";
 class AddTask extends React.Component {
   state = {
     questionsList: [],
@@ -8,9 +9,120 @@ class AddTask extends React.Component {
     optionInputCounter: -1,
     optionInput: [],
     optionList: [],
-    selectedItem: []
+    selectedItem: [],
+    title: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    rewardAmount: "",
+    returnOnPurchase: "",
+    questionText: "",
+    tid: ""
   };
 
+  formHandler = e => {
+    // console.log(e.target.name);
+    if (e.target.name === "title") {
+      this.setState({ title: e.target.value });
+    }
+    if (e.target.name === "description") {
+      this.setState({ description: e.target.value });
+    }
+
+    if (e.target.name === "startDate") {
+      this.setState({ startDate: e.target.value });
+    }
+
+    if (e.target.name === "endDate") {
+      this.setState({ endDate: e.target.value });
+    }
+    if (e.target.name === "rewardAmount") {
+      this.setState({ rewardAmount: e.target.value });
+    }
+    if (e.target.name === "returnOnPurchase") {
+      this.setState({ returnOnPurchase: e.target.value });
+    }
+    // if (e.target.name === "country") {
+    //   this.setState({ country: e.target.value });
+    // }
+  };
+
+  questionSubmitHandler = e => {
+    fetch("https://mysteryshopper1.azurewebsites.net/api/r/addquestion", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthYmFiamVlc0BnbWFpbC5jb20iLCJyb2xlIjoiUmVzdGF1cmFudCIsIm5iZiI6MTU3NTI3NjAwMiwiZXhwIjoxNTc3ODY4MDAyLCJpYXQiOjE1NzUyNzYwMDJ9.sJB6YyppbuR5LBSlELfLrihu5YBRq23nSXbwEObRe5U",
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        tid: this.state.tid,
+        questionText: this.state.questionText
+      })
+    })
+      .then(function(res) {
+        // console.log(res);
+
+        return res.json();
+      })
+      .then(response => {
+        console.log(this.state.title);
+        console.log("response of server:");
+        console.log(response);
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
+  };
+
+  onSubmitTask = e => {
+    console.log("in submitting task");
+    e.preventDefault();
+    fetch("https://mysteryshopper1.azurewebsites.net/api/r/broadcasttask", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthYmFiamVlc0BnbWFpbC5jb20iLCJyb2xlIjoiUmVzdGF1cmFudCIsIm5iZiI6MTU3NTI3NjAwMiwiZXhwIjoxNTc3ODY4MDAyLCJpYXQiOjE1NzUyNzYwMDJ9.sJB6YyppbuR5LBSlELfLrihu5YBRq23nSXbwEObRe5U",
+
+        // accept: "application/json",
+        Accept: "application/json",
+        "Content-Type": "application/json"
+        // "Access-Control-Allow-Origin": "https://javascript.info
+      },
+      body: JSON.stringify({
+        bId: 2,
+        tTitle: this.state.title,
+        tDescription: this.state.description,
+        // tStartDate: this.startDate,
+        // tEndDate: this.state.endDate,
+        tRewardAmount: parseInt(this.state.rewardAmount),
+        tReturnOnPurchase: parseInt(this.state.returnOnPurchase)
+      })
+    })
+      .then(function(res) {
+        // console.log(res);
+
+        return res.json();
+      })
+      .then(response => {
+        console.log(this.state.title);
+        console.log("response of server:");
+        let tid = response.TId;
+        this.setState({ tid: tid });
+        let arr = [];
+        for (let k = 0; k < this.state.questionsList.length; k++) {
+          arr.push(this.state.questionsList[k]["value"]);
+        }
+        this.setState({ questionText: arr });
+        this.questionSubmitHandler();
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
+  };
   deleteQuestionHandler = e => {
     let qIndex = e.target.id;
     let optionList1 = [];
@@ -190,37 +302,27 @@ class AddTask extends React.Component {
               <div className="card">
                 <div className="card-header"></div>
                 <div className="card-body">
-                  <form>
-                    <div className="row">
-                      <div className="col-md-5 pr-1">
-                        <div className="form-group">
-                          <label
-                            style={{
-                              fontSize: "14px",
-                              paddingBottom: "5%",
-                              color: "black"
-                            }}
-                          >
-                            Franchise's Name
-                          </label>
+                  <div className="row">
+                    <div className="col-md-5 pr-1">
+                      <div className="form-group">
+                        <label
+                          style={{
+                            fontSize: "14px",
+                            paddingBottom: "5%",
+                            color: "black"
+                          }}
+                        >
+                          Franchise's Address
+                        </label>
 
-                          <div style={{ paddingTop: "10%" }}>
-                            <ComboBox />
-                          </div>
+                        <div style={{ paddingTop: "10%" }}>
+                          <ComboBox />
                         </div>
                       </div>
-                      {/* <div className="col-md-3 px-1">
-                        <div className="form-group">
-                          <label>Username</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Username"
-                            defaultValue="michael23"
-                          />
-                        </div>
-                      </div> */}
                     </div>
+                  </div>
+                  {/* form */}
+                  <form onSubmit={this.onSubmitTask}>
                     <div className="row">
                       <div className="col-md-6 pr-1">
                         <div className="form-group">
@@ -232,6 +334,7 @@ class AddTask extends React.Component {
                             className="form-control"
                             placeholder="Company"
                             onChange={this.formHandler}
+                            required
                           />
                         </div>
                       </div>
@@ -244,6 +347,41 @@ class AddTask extends React.Component {
                             className="form-control"
                             placeholder="Contact"
                             onChange={this.formHandler}
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 pr-1">
+                        <div className="form-group">
+                          <label style={{ color: "black" }}>
+                            Reward Amount
+                          </label>
+                          <input
+                            type="number"
+                            name="rewardAmount"
+                            className="form-control"
+                            placeholder="Reward Amount"
+                            value={this.state.rewardAmount}
+                            onChange={this.formHandler}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 pl-1">
+                        <div className="form-group">
+                          <label style={{ color: "black" }}>
+                            Return on purchase
+                          </label>
+                          <input
+                            type="number"
+                            name="returnOnPurchase"
+                            className="form-control"
+                            placeholder="Return On purchase"
+                            value={this.state.returnOnPurchase}
+                            onChange={this.formHandler}
+                            required
                           />
                         </div>
                       </div>
@@ -254,10 +392,12 @@ class AddTask extends React.Component {
                           <label style={{ color: "black" }}>Title</label>
                           <input
                             type="text"
-                            name="address"
+                            name="title"
+                            value={this.state.title}
                             className="form-control"
-                            placeholder="Franchise Address"
+                            placeholder="Title"
                             onChange={this.formHandler}
+                            required
                           />
                         </div>
                       </div>
@@ -268,9 +408,10 @@ class AddTask extends React.Component {
                           <label style={{ color: "black" }}>Description</label>
                           <textarea
                             type="text"
-                            name="address"
+                            name="description"
                             className="form-control"
                             placeholder="Write Description there!"
+                            value={this.state.description}
                             onChange={this.formHandler}
                             style={{
                               height: "100px",
@@ -443,6 +584,7 @@ class AddTask extends React.Component {
                     <button
                       className="customBtn"
                       type="submit"
+                      // onClick={this.onSubmitTask}
                       style={{
                         marginLeft: "40%",
                         width: "10%",
@@ -451,8 +593,9 @@ class AddTask extends React.Component {
                     >
                       Submit
                     </button>
+                  </form>
 
-                    {/* <div className="row">
+                  {/* <div className="row">
                       <div className="col-md-12">
                         <div className="form-group">
                           <button
@@ -465,7 +608,6 @@ class AddTask extends React.Component {
                         </div>
                       </div>
                     </div> */}
-                  </form>
                 </div>
               </div>
             </div>
