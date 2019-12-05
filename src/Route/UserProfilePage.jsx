@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Userprofile from "../Dashboard/userprofile";
 import Navbar from "../Dashboard/navbar";
 import Sidemenu from "../Dashboard/sidemenu";
-import Logo from "../Dashboard/logo";
+// import Logo from "../Dashboard/logo";
 
 class UserProfilePage extends Component {
   state = {};

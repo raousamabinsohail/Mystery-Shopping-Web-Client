@@ -3,7 +3,7 @@ import "./App.css";
 import Login from "./loginPage/Login";
 import PrivateRoute from "./Route/PrivateRoute";
 import UserProfilePage from "./Route/UserProfilePage";
-import DashboardPage from "./Route/DashboardPage";
+// import DashboardPage from "./Route/DashboardPage";
 import AddTaskPage from "./Route/AddTaskPage";
 import {
   BrowserRouter as Router,
@@ -12,6 +12,11 @@ import {
   Switch
 } from "react-router-dom";
 import AddFranchisePage from "./Route/AddFranchisePage";
+import asyncComponent from "./loginPage/Async";
+
+const myDashboard = asyncComponent(() =>
+  import("./Route/DashboardPage").then(module => module.default)
+);
 
 //import sideNav from "./Home/sideNav"
 class App extends Component {
@@ -20,6 +25,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
+            <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
 
             {/* <Route exact path="/" component={Login} /> */}
@@ -28,10 +34,10 @@ class App extends Component {
               render={() => { 
                 Auth.signout();
                 return <Redirect to="/" />;
-              }}
+              }}  
             /> */}
 
-            <PrivateRoute exact path="/dashboard" component={DashboardPage} />
+            <PrivateRoute exact path="/dashboard" component={myDashboard} />
             <PrivateRoute path="/profile" component={UserProfilePage} />
             <PrivateRoute path="/addtask" component={AddTaskPage} />
             <PrivateRoute path="/addFranchise" component={AddFranchisePage} />

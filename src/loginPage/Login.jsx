@@ -2,6 +2,7 @@ import React from "react";
 import Auth from "../auth";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { browserHistory } from "react-router";
+import axios from "axios";
 // var cors = require('cors');
 // var express = require('express')
 // var router = express.Router()
@@ -11,46 +12,74 @@ class Login extends React.Component {
     email: "",
     password: ""
   };
- 
-  // https://mysteryshopper1.azurewebsites.net/api/r/getallbranches
-  handleCredentialPostRequest() {
-    fetch("https://mysteryshopper1.azurewebsites.net/api/r/login", {
-      method: "POST",
-      credentials: "same-origin",
+
+  forgetPassword = e => {
+    let axiosConfig = {
       headers: {
-        // accept: "application/json",
-        Accept: "application/json",
-        "Content-Type": "application/json"
-        // "Access-Control-Allow-Origin": "https://javascript.info"
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
+        "Content-Type": "application/json",
+        Authorization: "*"
+      }
+    };
+    axios
+      .post(
+        `http://mysteryshopping.herokuapp.com/api/o/forgetPassword`,
+        {
+          email: this.state.email,
+          password: this.state.password
+        },
+        axiosConfig
+      )
+      .then(res => {
+        console.log("server resp");
+        console.log(res);
+        console.log("server data:");
+        console.log(res.data);
+        console.log("server header");
+        console.log(res.headers);
       })
-    })
-      .then(function(res) {
-        // console.log(res);
-        return res.json();
-      })
-      .then(response => {
-        console.log("response of server:");
-        console.log(response);
-        if (response === "No restaurant found!") {
-          // console.log(" not authenticate");
-          alert("Invalid password or email");
-          Auth.isAuthenticated = false;
-        } else {
-          console.log("server authentication");
+      .catch(err => {
+        console.log("server error");
+        alert("No Email Found");
+        console.log(err);
+      });
+  };
+  handleCredentialPostRequest() {
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "*"
+        // "Access-Control-Allow-Origin": "*"
+      }
+    };
+    axios
+      .post(
+        `http://mysteryshopping.herokuapp.com/api/o/login`,
+        {
+          email: this.state.email,
+          password: this.state.password
+        },
+        axiosConfig
+      )
+      .then(res => {
+        console.log(res);
+        if (res) {
+          console.log(res.data);
+          Auth.response = res.data;
+          Auth.token = res.headers.authorization;
+
           Auth.isAuthenticated = true;
-          // Auth.isLoaded = true;
-          Auth.response = response;
           this.props.history.push("/dashboard");
         }
       })
-      .catch(function(res) {
-        console.log(res);
+      .catch(err => {
+        console.log("server error");
+        console.log(err.response);
+        // alert("Invalid Email or password");
+        let code = err.response.status;
       });
   }
+
+  // https://mysteryshopper1.azurewebsites.net/api/r/getallbranches
 
   passwordHandler = e => {
     this.setState({ password: e.target.value });
@@ -62,7 +91,6 @@ class Login extends React.Component {
     e.preventDefault();
     console.log("email =>", this.state.email);
     console.log(this.state.password);
-    this.props.history.push("/dashboard");
     this.handleCredentialPostRequest();
   };
   render() {
@@ -162,6 +190,14 @@ class Login extends React.Component {
                     <div className="container-login100-form-btn p-t-10">
                       <button className="login100-form-btn">Login</button>
                     </div>
+                    <button
+                      style={{ paddingLeft: "29%" }}
+                      className="hover_trash_icon"
+                      type="button"
+                      onClick={this.forgetPassword}
+                    >
+                      Forget Password? click here
+                    </button>
 
                     {/* <div className="text-center w-full p-t-25 p-b-230">
                       <a href="#" className="txt1">

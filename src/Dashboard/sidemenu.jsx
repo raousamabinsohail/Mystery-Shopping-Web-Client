@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Logo from "./logo";
-import { Link, withRouter, Redirect, BrowserHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // linear-gradient(185deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(255,127,0,0.8382703423166141) 100%)
 

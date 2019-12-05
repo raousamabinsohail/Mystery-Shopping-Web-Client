@@ -2,50 +2,43 @@ import React from "react";
 import Auth from "../auth";
 class AddFranchise extends React.Component {
   state = {
-    orgName: "",
+    name: "",
     email: "",
-    franchiseName: "",
-    contact: "",
-    address: [],
-    contact: "",
+    buildingNo: "",
+    town: "",
     city: "",
     country: "",
-    franciseId: "",
+    zipcode: "",
+    contact: "",
     counter: "",
-    street: "",
-    town: ""
+    type: ""
   };
-  componentDidMount() {
-    let res = Auth.response;
-    console.log("here authentication is");
-    console.log(Auth.branchCount);
-    this.setState({
-      orgName: res.Name,
-      email: res.Email,
-      counter: Auth.branchCount
-    });
-  }
+  componentDidMount() {}
   submitFranchiseDetails = e => {
     e.preventDefault();
-    fetch("https://mysteryshopper1.azurewebsites.net/api/r/branchsignup", {
+
+    if (this.state.type === "select buisness type" || this.state.type === "") {
+      alert("Select Buisness Type");
+      return;
+    }
+    fetch("http://mysteryshopping.herokuapp.com/api/o/addbusiness", {
       method: "POST",
       credentials: "same-origin",
       headers: {
-        Authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthYmFiamVlc0BnbWFpbC5jb20iLCJyb2xlIjoiUmVzdGF1cmFudCIsIm5iZiI6MTU3NTI3NjAwMiwiZXhwIjoxNTc3ODY4MDAyLCJpYXQiOjE1NzUyNzYwMDJ9.sJB6YyppbuR5LBSlELfLrihu5YBRq23nSXbwEObRe5U",
-
-        // accept: "application/json",
+        Authorization: Auth.token,
         Accept: "application/json",
         "Content-Type": "application/json"
-        // "Access-Control-Allow-Origin": "https://javascript.info
       },
       body: JSON.stringify({
-        name: this.state.franchiseName,
+        name: this.state.name,
+        email: this.state.email,
+        building: this.state.buildingNo,
+        town: this.state.town,
         city: this.state.city,
         country: this.state.country,
-        street: this.state.street,
-        town: this.state.town,
-        phone: this.state.contact
+        zipcode: parseInt(this.state.zipcode),
+        phone: parseInt(this.state.contact),
+        niche: this.state.type
       })
     })
       .then(function(res) {
@@ -53,54 +46,68 @@ class AddFranchise extends React.Component {
         return res.json();
       })
       .then(response => {
+        console.log(Auth.token);
         console.log("response of server:");
         console.log(response);
-        let count = 0;
-        for (let i = 0; i < Auth.branchResponse.length; i++) {
-          count = i + 1;
-        }
-        count = count + 1;
-        Auth.branchCount = count;
+        
 
-        this.setState({ counter: count });
+        let count = 0;
+        // for (let i = 0; i < Auth.branchResponse.length; i++) {
+        //   count = i + 1;
+        // }
+        // count = count + 1;
+        // Auth.branchCount = count;
+
+        // this.setState({ counter: count });
       })
       .catch(function(res) {
+        
         console.log(res);
       });
   };
   resetField = e => {
     this.setState({
-      franchiseName: "",
+      name: "",
+      email: "",
+      buildingNo: "",
+      town: "",
       city: "",
+      country: "",
+      zipcode: "",
       contact: "",
-      street: "",
-      town: ""
+      type: ""
     });
+  };
+  buisnessTypeHandler = e => {
+    this.state.type = e.target.value;
   };
   formHandler = e => {
     // console.log(e.target.name);
-    if (e.target.name === "street") {
-      this.setState({ street: e.target.value });
+    if (e.target.name === "name") {
+      this.setState({ name: e.target.value });
     }
+    if (e.target.name === "email") {
+      this.setState({ email: e.target.value });
+    }
+
+    if (e.target.name === "bNo") {
+      this.setState({ buildingNo: e.target.value });
+    }
+
     if (e.target.name === "town") {
       this.setState({ town: e.target.value });
-    }
-
-    if (e.target.name === "franchiseName") {
-      this.setState({ franchiseName: e.target.value });
-    }
-
-    if (e.target.name === "address") {
-      this.setState({ address: e.target.value });
-    }
-    if (e.target.name === "contact") {
-      this.setState({ contact: e.target.value });
     }
     if (e.target.name === "city") {
       this.setState({ city: e.target.value });
     }
     if (e.target.name === "country") {
       this.setState({ country: e.target.value });
+    }
+    if (e.target.name === "zipcode") {
+      this.setState({ zipcode: e.target.value });
+    }
+    if (e.target.name === "contact") {
+      this.setState({ contact: e.target.value });
     }
   };
   addBranchInList() {}
@@ -113,79 +120,74 @@ class AddFranchise extends React.Component {
             <div className="col-md-8">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="title">Add Franchise</h5>
+                  <h5 className="title">Add Buisness</h5>
                 </div>
                 <div className="card-body">
                   <form onSubmit={this.submitFranchiseDetails}>
                     <div className="row">
-                      <div className="col-md-5 pr-1">
+                      <div className="col-md-6 pr-1">
                         <div className="form-group">
-                          <label>Organization's Name</label>
+                          <label>Business's name</label>
                           <input
                             type="text"
+                            name="name"
                             className="form-control"
-                            name="organizationName"
-                            placeholder="Organization Name"
-                            defaultValue={this.state.orgName}
-                            disabled
-                            // onChange={this.formHandler}
+                            placeholder="Business Name"
+                            value={this.state.name}
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
-                      {/* <div className="col-md-3 px-1">
+                      <div className="col-md-6 pl-1">
                         <div className="form-group">
-                          <label>Username</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Username"
-                            defaultValue="michael23"
-                          />
-                        </div>
-                      </div> */}
-                      <div className="col-md-4 pl-1">
-                        <div className="form-group">
-                          <label id="exampleInputEmail1">Email address</label>
+                          <label>Email</label>
                           <input
                             type="email"
-                            className="form-control"
                             name="email"
-                            placeholder="Email"
-                            defaultValue={this.state.email}
-                            disabled
-                            // onChange={this.formHandler}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <form></form>
-                    <div className="row">
-                      <div className="col-md-12 pr-1">
-                        <div className="form-group">
-                          <label>Francise Name</label>
-                          <input
-                            type="text"
-                            name="franchiseName"
                             className="form-control"
-                            placeholder="Company"
-                            value={this.state.franchiseName}
                             onChange={this.formHandler}
+                            value={this.state.email || ""}
+                            placeholder="Email"
                             required
                           />
                         </div>
                       </div>
                     </div>
+                    <br />
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group">
+                          <div className="box">
+                            <label style={{ paddingRight: "2%" }}>
+                              Buisness Type
+                            </label>
+                            <select onChange={this.buisnessTypeHandler}>
+                              <option value="select buisness type">
+                                Select buisness type
+                              </option>
+                              <option value="Health">Health</option>
+                              <option value="Health">Food</option>
+                              <option value="Health">Travel</option>
+                              <option value="Health">Games</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <h6 style={{ fontSize: "12px" }}>ADDRESS</h6>
                     <div className="row">
                       <div className="col-md-6 pr-1">
                         <div className="form-group">
-                          <label>Street</label>
+                          <label>Building Number</label>
                           <input
                             type="text"
-                            name="street"
+                            name="bNo"
                             className="form-control"
-                            placeholder="Street"
-                            value={this.state.street}
+                            placeholder="Building Number"
                             onChange={this.formHandler}
+                            value={this.state.buildingNo}
                             required
                           />
                         </div>
@@ -198,29 +200,15 @@ class AddFranchise extends React.Component {
                             name="town"
                             className="form-control"
                             value={this.state.town}
-                            placeholder="town"
                             onChange={this.formHandler}
+                            placeholder="Town"
                             required
                           />
                         </div>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-4 pr-1">
-                        <div className="form-group">
-                          <label>Contact#</label>
-                          <input
-                            type="number"
-                            name="contact"
-                            className="form-control"
-                            placeholder="contact#"
-                            value={this.state.contact}
-                            onChange={this.formHandler}
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-4 px-1">
+                      <div className="col-md-6 pr-1">
                         <div className="form-group">
                           <label>City</label>
                           <input
@@ -234,17 +222,45 @@ class AddFranchise extends React.Component {
                           />
                         </div>
                       </div>
-                      <div className="col-md-4 pl-1">
+                      <div className="col-md-6 pl-1">
                         <div className="form-group">
                           <label>Country</label>
                           <input
                             type="text"
                             name="country"
                             className="form-control"
-                            placeholder="Country"
                             value={this.state.country}
+                            placeholder="Country"
                             onChange={this.formHandler}
                             required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 pr-1">
+                        <div className="form-group">
+                          <label>ZIP Code</label>
+                          <input
+                            type="number"
+                            name="zipcode"
+                            className="form-control"
+                            placeholder="ZIP Code"
+                            value={this.state.zipcode}
+                            onChange={this.formHandler}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 pl-1">
+                        <div className="form-group">
+                          <label>Contact#</label>
+                          <input
+                            type="number"
+                            name="contact"
+                            className="form-control"
+                            value={this.state.contact}
+                            placeholder="contact"
+                            onChange={this.formHandler}
                           />
                         </div>
                       </div>
@@ -316,23 +332,6 @@ class AddFranchise extends React.Component {
             </div>
           </div>
         </div>
-        <footer className="footer">
-          <div className="container-fluid">
-            <nav>
-              <ul>
-                <li>
-                  <a href="https://www.creative-tim.com">Mystery Shop</a>
-                </li>
-                <li>
-                  <a href="http://presentation.creative-tim.com">About Us</a>
-                </li>
-                <li>
-                  <a href="http://blog.creative-tim.com">Blog</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </footer>
       </React.Fragment>
     );
   }

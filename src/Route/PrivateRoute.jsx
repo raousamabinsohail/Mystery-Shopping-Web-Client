@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  withRouter,
-  Switch,
-  Route,
-  Redirect,
-  BrowserRouter as Router
-} from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Auth from "../auth";
 
 class PrivateRoute extends React.Component {
@@ -18,9 +12,8 @@ class PrivateRoute extends React.Component {
   //   setTimeout(cb, 100); // fake async
   // }
   componentDidMount() {
-    // let auth = Auth.isAuthenticated;
-    // console.log("pr ", auth);
-    // this.setState({ isAuthenticated: auth });
+    // Auth.isAuthenticated = true;
+    console.log("reloading pr ", Auth.isAuthenticated);
   }
   render() {
     // const fakeAuth = {
@@ -44,6 +37,8 @@ class PrivateRoute extends React.Component {
       <Route
         {...rest}
         render={props => {
+          // console.log("page reload  ", Auth.isAuthenticated);
+          Auth.isAuthenticated = true;
           return Auth.isAuthenticated ? (
             <Component {...props} />
           ) : (

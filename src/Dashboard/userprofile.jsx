@@ -4,22 +4,34 @@ import Navbar from "./navbar";
 import Auth from "../auth";
 class Userprofile extends React.Component {
   state = {
-    companyName: "",
+    orgName: "",
     email: "",
-    name: "",
-    address: "",
-    phone: ""
+    buildingNo: "",
+    town: "",
+    city: "",
+    country: "",
+    zipcode: "",
+    contact: ""
   };
   componentDidMount() {
-    console.log(Auth.response);
     let res = Auth.response;
-    console.log(res.email);
-    this.setState({
-      name: res.Name,
-      email: res.Email,
-      address: res.Address,
-      phone: res.PhoneNumber
-    });
+    // console.log("city here");
+    if (res) {
+      console.log(res.officeAddress.city);
+
+      this.setState({
+        orgName: res.name,
+        email: res.email,
+        buildingNo: res.officeAddress.building,
+        town: res.officeAddress.town,
+        city: res.officeAddress.city,
+        country: res.officeAddress.country,
+        zipcode: res.officeAddress.zipcode,
+        contact: res.phone
+      });
+    }
+
+    // console.log(res["officeAddress"]["building"]);
   }
   render() {
     return (
@@ -35,28 +47,59 @@ class Userprofile extends React.Component {
                 <div className="card-body">
                   <form>
                     <div className="row">
-                      <div className="col-md-5 pr-1">
+                      <div className="col-md-6 pr-1">
                         <div className="form-group">
-                          <label>Company Name</label>
+                          <label>Organization's name</label>
                           <input
                             type="text"
+                            name="orgName"
                             className="form-control"
-                            placeholder="Company"
-                            value={this.state.companyName}
-                            readOnly
+                            placeholder="Organization Name"
+                            defaultValue={this.state.orgName}
+                            disabled
                           />
                         </div>
                       </div>
-
-                      <div className="col-md-4 pl-1">
+                      <div className="col-md-6 pl-1">
                         <div className="form-group">
-                          <label id="exampleInputEmail1">Email address</label>
+                          <label>Email</label>
                           <input
                             type="email"
+                            name="email"
                             className="form-control"
+                            defaultValue={this.state.email}
                             placeholder="Email"
-                            value={this.state.email}
-                            readOnly
+                            disabled
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                    <h6 style={{ fontSize: "12px" }}>ADDRESS</h6>
+                    <div className="row">
+                      <div className="col-md-6 pr-1">
+                        <div className="form-group">
+                          <label>Building Number</label>
+                          <input
+                            type="text"
+                            name="bNo"
+                            className="form-control"
+                            placeholder="Building Number"
+                            defaultValue={this.state.buildingNo}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 pl-1">
+                        <div className="form-group">
+                          <label>Town</label>
+                          <input
+                            type="text"
+                            name="town"
+                            className="form-control"
+                            defaultValue={this.state.town}
+                            placeholder="Town"
+                            disabled
                           />
                         </div>
                       </div>
@@ -64,18 +107,61 @@ class Userprofile extends React.Component {
                     <div className="row">
                       <div className="col-md-6 pr-1">
                         <div className="form-group">
-                          <label>Name</label>
+                          <label>City</label>
                           <input
                             type="text"
+                            name="city"
                             className="form-control"
-                            placeholder="Company"
-                            defaultValue={this.state.name}
-                            readOnly
+                            placeholder="City"
+                            defaultValue={this.state.city}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 pl-1">
+                        <div className="form-group">
+                          <label>Country</label>
+                          <input
+                            type="text"
+                            name="country"
+                            className="form-control"
+                            defaultValue={this.state.country}
+                            placeholder="Country"
+                            disabled
                           />
                         </div>
                       </div>
                     </div>
                     <div className="row">
+                      <div className="col-md-6 pr-1">
+                        <div className="form-group">
+                          <label>ZIP Code</label>
+                          <input
+                            type="text"
+                            name="zipcode"
+                            className="form-control"
+                            placeholder="ZIP Code"
+                            defaultValue={this.state.zipcode}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 pl-1">
+                        <div className="form-group">
+                          <label>Contact#</label>
+                          <input
+                            type="number"
+                            name="Contact"
+                            className="form-control"
+                            defaultValue={this.state.contact}
+                            placeholder="contact"
+                            disabled
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="row">
                       <div className="col-md-12">
                         <div className="form-group">
                           <label>Address</label>
@@ -88,33 +174,7 @@ class Userprofile extends React.Component {
                           />
                         </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-4 pr-1">
-                        <div className="form-group">
-                          <label>Phone Number</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="City"
-                            defaultValue={this.state.phone}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-4 px-1">
-                        <div className="form-group">
-                          <label>Country</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            // placeholder="Country"
-                            value="Pakistan"
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    </div> */}
                   </form>
                 </div>
               </div>

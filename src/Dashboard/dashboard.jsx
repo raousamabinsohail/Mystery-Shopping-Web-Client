@@ -8,41 +8,51 @@ class Dashboard extends React.Component {
   };
   // https://mysteryshopper1.azurewebsites.net/api/r/getallbranches
   componentDidMount() {
-    fetch("https://mysteryshopper1.azurewebsites.net/api/r/getallbranches", {
-      method: "GET",
-      credentials: "same-origin",
-      Authorization: "",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthYmFiamVlc0BnbWFpbC5jb20iLCJyb2xlIjoiUmVzdGF1cmFudCIsIm5iZiI6MTU3NTI3NjAwMiwiZXhwIjoxNTc3ODY4MDAyLCJpYXQiOjE1NzUyNzYwMDJ9.sJB6YyppbuR5LBSlELfLrihu5YBRq23nSXbwEObRe5U"
-      }
-    })
-      .then(function(res) {
-        return res.json();
-      })
-      // string 253   int 3   float 4
-      .then(response => {
-        // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
-        console.log("xxxddd");
-        console.log(response);
-        let count = 0;
-        for (let i = 0; i < response.length; i++) {
-          count = i + 1;
-        }
-        this.setState({ branchCount: count });
-        Auth.branchCount = count;
-        Auth.branchResponse = response;
-      })
-      .catch(function(res) {
-        console.log(res);
-      });
+    // fetch("https://mysteryshopper1.azurewebsites.net/api/r/getallbranches", {
+    //   method: "GET",
+    //   credentials: "same-origin",
+    //   Authorization: "",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization:
+    //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthYmFiamVlc0BnbWFpbC5jb20iLCJyb2xlIjoiUmVzdGF1cmFudCIsIm5iZiI6MTU3NTI3NjAwMiwiZXhwIjoxNTc3ODY4MDAyLCJpYXQiOjE1NzUyNzYwMDJ9.sJB6YyppbuR5LBSlELfLrihu5YBRq23nSXbwEObRe5U"
+    //   }
+    // })
+    //   .then(function(res) {
+    //     return res.json();
+    //   })
+    //   // string 253   int 3   float 4
+    //   .then(response => {
+    //     // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
+    //     console.log("xxxddd");
+    //     console.log(response);
+    //     let count = 0;
+    //     for (let i = 0; i < response.length; i++) {
+    //       count = i + 1;
+    //     }
+    //     this.setState({ branchCount: count });
+    //     Auth.branchCount = count;
+    //     Auth.branchResponse = response;
+    //   })
+    //   .catch(function(res) {
+    //     console.log(res);
+    //   });
   }
   render() {
+    let filepath = "images/bluradmin.jpg";
     return (
       <React.Fragment>
         {/* <body className=""> */}
-        <div className="content">
+
+        <div
+          className="content"
+          // style={{
+          //   backgroundImage: "url(" + filepath + ")",
+          //   backgroundRepeat: "noRepeat",
+          //   backgroundPosition: "center",
+          //   backgroundSize: "cover"
+          // }}
+        >
           <div className="row">
             <div className="col-lg-4">
               <div className="card card-chart">
